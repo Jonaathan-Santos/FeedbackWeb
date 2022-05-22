@@ -4,6 +4,7 @@ import bugImageURL from "../../assets/bug.png";
 import ideaImageURL from "../../assets/idea.png";
 import otherImageURL from "../../assets/thought.png";
 import FeedbackTypeStep from "./steps/FeedbackTypeStep";
+import { FeedbackContentStep } from "./steps/FeedbackContentStep";
 
 export const feedbackTypes = {
   BUG: {
@@ -35,17 +36,23 @@ export type FeedbackType = keyof typeof feedbackTypes;
 
 
 export function WidgetForm() {
-  const [feedbackType, setFeedbackType] = useState<FeeedbackType | null>(null);
+
+  const [feedbackType, setFeedbackType] = useState<FeedbackType | null>(null);
+
+  function handleFeedbackRestarted(){
+    setFeedbackType(null)
+  }
+
   return (
     <div className="bg-zinc-900 p-4 relative rounded-2xl mb-4 flex flex-col items-center shadow-lg w-[calc(100vw-2rem)] md:w-auto">
       {!feedbackType ? <FeedbackTypeStep onFeedbackTypeChenged={setFeedbackType}/>: (
-        <div className="">Hello Word</div>
+       <FeedbackContentStep feedbackType={feedbackType} onFeedbackRestarted={handleFeedbackRestarted} />
       )}
-      <footer className="text-xs text-neutral-400">
-        Feito por
+      <footer className="text-xs text-neutral-400 gap-5">
+        Feito por 
         <a
           href="https://github.com/Jonaathan-Santos"
-          className="underline underline-offset-2"
+          className="underline underline-offset-2 ml-1"
         >
           Jonathan Santos
         </a>
