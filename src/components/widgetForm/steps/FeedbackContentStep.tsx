@@ -1,7 +1,8 @@
-import { ArrowLeft } from "phosphor-react";
+import { ArrowLeft, Camera } from "phosphor-react";
 import React from "react";
 import { FeedbackType, feedbackTypes } from "..";
 import CloseButton from "../../CloseButton";
+import { ScreenshotButton } from "../ScreenshotButton";
 
 interface FeedbackContentStepProps{
   feedbackType: FeedbackType;
@@ -35,6 +36,8 @@ export function FeedbackContentStep({feedbackType, onFeedbackRestarted}: Feedbac
           placeholder="Conte com detalhes o que está acontecendo..."
         />
         <footer className="flex">
+
+          <ScreenshotButton/>
 
           <button
             type="submit"
