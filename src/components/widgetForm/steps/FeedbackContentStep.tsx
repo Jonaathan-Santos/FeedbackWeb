@@ -1,5 +1,5 @@
-import { ArrowLeft, Camera } from "phosphor-react";
-import React from "react";
+import { ArrowLeft } from "phosphor-react";
+import React, { FormEvent, useState } from "react";
 import { FeedbackType, feedbackTypes } from "..";
 import CloseButton from "../../CloseButton";
 import { ScreenshotButton } from "../ScreenshotButton";
@@ -12,7 +12,16 @@ interface FeedbackContentStepProps{
 export function FeedbackContentStep({feedbackType, onFeedbackRestarted}: FeedbackContentStepProps) {
 
   const feedbackTypeInfo = feedbackTypes[feedbackType]
+  const [Screenshot, setScreenshot] = useState<string | null>(null)
+  const [Coment, setComent] = useState<string>('')
+  
+  function handleSubmitFeedback(event: FormEvent){
 
+    event.preventDefault()
+
+    console.log(Screenshot, Coment)
+
+  }
   return (
     <>
       <header>
@@ -30,19 +39,20 @@ export function FeedbackContentStep({feedbackType, onFeedbackRestarted}: Feedbac
         </span>
         <CloseButton />
       </header>
-      <form className="my-4 w-full">
+      <form className="my-4 w-full" onSubmit={handleSubmitFeedback}>
         <textarea
           className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 focus:outline-none border-zinc-600 bg-transparent focus:border-brand-500 rounded-md focus:ring-1 focus:ring-brand-500 resize-none scrollbar scrollbar-thumb-zinc-700 scrollbar-track-transparent scrollbar-thin  "
           placeholder="Conte com detalhes o que está acontecendo..."
+          onChange={event => setComent(event.target.value) }
         />
         <footer className="flex">
 
-          <ScreenshotButton/>
+          <ScreenshotButton onScreenshotTook={setScreenshot} screenshot={Screenshot}/>
 
           <button
             type="submit"
-            className="p-2 bg-brand-500 rounded-[4px] border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors"
-          
+            className="p-2 bg-brand-500 rounded-[4px] border-transparent flex-1 flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:hover:bg-brand-500"
+            disabled={Coment.length === 0}
           >
             Enviar feedback.
           </button>
